@@ -1,0 +1,53 @@
+.filtersCard {
+  border: 1px solid var(--color-border);
+}
+
+.search {
+  width: 320px;
+}
+
+.tableCard {
+  border: 1px solid var(--color-border);
+}
+
+.userBtn {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.avatarSoft {
+  background: #eaf1fb !important;
+  color: #1f2937 !important;
+  font-weight: 600;
+}
+
+.userMeta {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.userName {
+  display: block;
+  color: #111827;
+  line-height: 1.2;
+}
+
+.userRole {
+  display: block;
+  line-height: 1.2;
+  font-size: 12px !important;
+}
+
+@media (max-width: 1100px) {
+  .search {
+    width: 100%;
+  }
+}

@@ -1,0 +1,36 @@
+.pageBg {
+  min-height: 100vh;
+  padding: 0;
+  background: #ffffff;
+}
+
+.frame {
+  min-height: 100vh;
+  border-radius: 0;
+  border: 0;
+  background: #ffffff;
+  box-shadow: none;
+  display: flex;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  padding: 16px 18px 14px;
+  background: #ffffff;
+}
+
+.content {
+  min-height: 0;
+}
+
+@media (max-width: 1100px) {
+  .frame {
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .main {
+    padding: 12px;
+  }
+}

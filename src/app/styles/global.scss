@@ -1,0 +1,173 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --font-family-base: "Manrope", "Segoe UI", sans-serif;
+
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 22px;
+  --font-size-xxl: 28px;
+
+  --color-bg-page: #ecf0f5;
+  --color-bg-body: #e8edf3;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f8fafc;
+  --color-border: #e4e7ec;
+  --color-border-strong: #d7dce4;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #6b7280;
+  --color-primary: #ff6b3d;
+  --color-success: #16a34a;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  color: var(--color-text-primary);
+  background: var(--color-bg-body);
+}
+
+main {
+  min-height: 0;
+}
+
+.ant-card {
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+}
+
+.ant-typography,
+.ant-statistic-title,
+.ant-statistic-content,
+.ant-table,
+.ant-list,
+.ant-tag {
+  letter-spacing: 0.01em;
+}
+
+.ant-table-wrapper .ant-table {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #667085 !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  background: #f8fafc !important;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr > td {
+  border-bottom: 1px solid var(--color-border-strong) !important;
+  color: #111827 !important;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr:last-child > td {
+  border-bottom: 0 !important;
+}
+
+.ant-tag {
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  padding-inline: 10px;
+  line-height: 20px;
+  margin-inline-end: 0;
+  border: 1px solid #e4e7ec;
+}
+
+.ant-input,
+.ant-input-affix-wrapper,
+.ant-select-selector,
+.ant-picker {
+  background: #fff !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.ant-select .ant-select-selector,
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector,
+.ant-select-outlined .ant-select-selector {
+  background: #fff !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.ant-input::placeholder,
+.ant-select-selection-placeholder,
+.ant-picker-input > input::placeholder {
+  color: #94a3b8 !important;
+}
+
+.ant-input-affix-wrapper .ant-input-prefix,
+.ant-input-affix-wrapper .ant-input-suffix,
+.ant-select-arrow,
+.ant-picker-suffix {
+  color: var(--color-text-secondary) !important;
+}
+
+.ant-select-selection-item,
+.ant-select-selection-search-input {
+  color: var(--color-text-primary) !important;
+}
+
+.ant-input:hover,
+.ant-input-affix-wrapper:hover,
+.ant-select-selector:hover,
+.ant-picker:hover,
+.ant-input:focus,
+.ant-input-affix-wrapper-focused,
+.ant-select-focused .ant-select-selector,
+.ant-select-open .ant-select-selector,
+.ant-picker-focused {
+  background: #fff !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: none !important;
+}
+
+.ant-select-dropdown,
+.ant-picker-dropdown .ant-picker-panel-container {
+  background: #fff !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+.ant-select-item {
+  color: var(--color-text-primary) !important;
+}
+
+.ant-select-item-option-active:not(.ant-select-item-option-disabled),
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: #fff4ef !important;
+  color: var(--color-text-primary) !important;
+}
+
+.ant-btn-primary {
+  background: #111827 !important;
+  border-color: #111827 !important;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background: #0b1220 !important;
+  border-color: #0b1220 !important;
+}
+
+.ant-pagination .ant-pagination-item-active {
+  border-color: #ff6b3d !important;
+  background: #ff6b3d !important;
+}
+
+.ant-pagination .ant-pagination-item-active a {
+  color: #fff !important;
+}
+
+.ant-select-item-option-selected .ant-select-item-option-state,
+.ant-select-item-option-active .ant-select-item-option-state {
+  color: var(--color-text-secondary) !important;
+}

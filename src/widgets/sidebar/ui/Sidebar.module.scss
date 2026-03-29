@@ -1,0 +1,159 @@
+.sidebar {
+  width: 288px;
+  min-width: 288px;
+  flex: 0 0 288px;
+  border-right: 1px solid var(--color-border);
+  background: #f7f8fb;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.brandCard {
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  padding: 6px 0;
+  display: flex;
+  gap: 0;
+  align-items: center;
+}
+
+.logo {
+  width: 48px;
+  height: 32px;
+}
+
+.section {
+  border-top: 1px solid #e8ebf0;
+  padding-top: 10px;
+}
+
+.sectionTitle {
+  display: block;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.nav {
+  display: grid;
+  gap: 4px;
+}
+
+.item,
+.helpItem {
+  position: relative;
+  height: 34px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  color: #334155;
+  text-decoration: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.item:hover,
+.helpItem:hover {
+  background: #edf2f7;
+}
+
+.item:focus,
+.item:focus-visible,
+.helpItem:focus,
+.helpItem:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.active {
+  background: #ffffff;
+  border-color: #d8dde7;
+  color: #111827;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+  outline: none;
+}
+
+.active::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 6px;
+  width: 4px;
+  height: 22px;
+  border-radius: 99px;
+  background: #ff6b3d;
+}
+
+.icon {
+  width: 16px;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.label {
+  flex: 1;
+}
+
+.footerLinks {
+  border-top: 1px solid #e8ebf0;
+  padding-top: 10px;
+  display: grid;
+  gap: 4px;
+}
+
+.exit {
+  margin-top: auto;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.exit:hover {
+  color: #1f2937;
+}
+
+@media (max-width: 1100px) {
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    flex: initial;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .footerLinks {
+    display: none;
+  }
+
+  .section:not(:first-of-type) {
+    border-top: 0;
+    padding-top: 0;
+    margin-top: -4px;
+  }
+
+  .nav {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+  }
+
+  .item {
+    min-width: max-content;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+  }
+}

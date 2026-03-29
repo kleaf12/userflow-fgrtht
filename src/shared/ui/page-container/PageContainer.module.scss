@@ -1,0 +1,21 @@
+.page {
+  display: grid;
+  gap: 14px;
+}
+
+.headerActions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.content {
+  display: grid;
+  gap: 14px;
+}
+
+@media (max-width: 900px) {
+  .headerActions {
+    justify-content: flex-start;
+  }
+}
