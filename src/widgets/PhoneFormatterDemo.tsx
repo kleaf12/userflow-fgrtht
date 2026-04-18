@@ -20,7 +20,7 @@ export const PhoneFormatterDemo = () => {
           width: "100%",
           padding: "8px",
           fontSize: "16px",
-          marginBottom: "12px",
+          marginBottom: "12px"
         }}
       />
 
