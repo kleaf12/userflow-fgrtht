@@ -1,5 +1,6 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
+import { debounce } from "@utilities/debounce";
 import {
   Alert,
   Card,
@@ -71,12 +72,20 @@ export const RequestsPage = () => {
     queryFn: mockApi.getRequests
   });
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [status, setStatus] = useState<"all" | ServiceRequest["status"]>("all");
   const [selected, setSelected] = useState<ServiceRequest | null>(null);
+  const debouncedSetSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        setDebouncedSearch(value);
+      }, 300),
+    [setDebouncedSearch]
+  );
 
   const filtered = useMemo(() => {
     const rows = data ?? [];
-    const query = search.trim().toLowerCase();
+    const query = debouncedSearch.trim().toLowerCase();
 
     return rows.filter((row) => {
       const statusOk = status === "all" || row.status === status;
@@ -90,7 +99,7 @@ export const RequestsPage = () => {
         .toLowerCase()
         .includes(query);
     });
-  }, [data, search, status]);
+  }, [data, debouncedSearch, status]);
 
   const stats = useMemo(() => {
     const source = data ?? [];
@@ -211,7 +220,12 @@ export const RequestsPage = () => {
           <Input
             allowClear
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              const value = event.target.value;
+
+              setSearch(value);
+              debouncedSetSearch(value);
+            }}
             prefix={<SearchOutlined />}
             placeholder="Поиск по ID, названию, заявителю"
             style={{ width: 320 }}

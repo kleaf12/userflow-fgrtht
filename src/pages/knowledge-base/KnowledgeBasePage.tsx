@@ -1,5 +1,6 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
+import { debounce } from "@utilities/debounce";
 import { Alert, Empty, Input, Select, Skeleton, Space, Tag, Typography } from "antd";
 import dayjs from "dayjs";
 import { useMemo, useState } from "react";
@@ -33,11 +34,19 @@ export const KnowledgeBasePage = () => {
     queryFn: mockApi.getKnowledgeArticles
   });
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [category, setCategory] = useState<"all" | KnowledgeArticle["category"]>("all");
+  const debouncedSetSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        setDebouncedSearch(value);
+      }, 300),
+    [setDebouncedSearch]
+  );
 
   const filtered = useMemo(() => {
     const rows = data ?? [];
-    const query = search.trim().toLowerCase();
+    const query = debouncedSearch.trim().toLowerCase();
 
     return rows.filter((row) => {
       const categoryOk = category === "all" || row.category === category;
@@ -51,7 +60,7 @@ export const KnowledgeBasePage = () => {
         .toLowerCase()
         .includes(query);
     });
-  }, [data, search, category]);
+  }, [data, debouncedSearch, category]);
 
   if (isLoading) {
     return <Skeleton active paragraph={{ rows: 8 }} />;
@@ -68,7 +77,12 @@ export const KnowledgeBasePage = () => {
           <Input
             allowClear
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              const value = event.target.value;
+
+              setSearch(value);
+              debouncedSetSearch(value);
+            }}
             prefix={<SearchOutlined />}
             placeholder="Поиск по статье, тегам, ID"
             className={styles.search}

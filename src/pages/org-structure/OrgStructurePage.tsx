@@ -1,5 +1,6 @@
 import { SearchOutlined, TeamOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
+import { debounce } from "@utilities/debounce";
 import {
   Alert,
   Avatar,
@@ -25,7 +26,6 @@ import { mockApi } from "@shared/api/mockApi";
 import { PageContainer } from "@shared/ui/page-container/PageContainer";
 
 import styles from "./OrgStructurePage.module.scss";
-import { debounce } from "../../utilities/debounce";
 
 import type { ColumnsType } from "antd/es/table";
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { formatPhone } from "../utilities/formatPhone";
+import { formatPhone } from "../../utilities/formatPhone";
 
 export const PhoneFormatterDemo = () => {
   const [phone, setPhone] = useState("");

@@ -1,5 +1,6 @@
 import { DownOutlined, EditOutlined, SearchOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
+import { debounce } from "@utilities/debounce";
 import {
   Alert,
   Button,
@@ -27,7 +28,6 @@ import { mockApi } from "@shared/api/mockApi";
 import { PageContainer } from "@shared/ui/page-container/PageContainer";
 
 import styles from "./AssetsPage.module.scss";
-import { debounce } from "../../utilities/debounce";
 
 import type { ColumnsType } from "antd/es/table";
 
