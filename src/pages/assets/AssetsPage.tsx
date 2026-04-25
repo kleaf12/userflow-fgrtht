@@ -1,5 +1,6 @@
 import { DownOutlined, EditOutlined, SearchOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
+import { debounce } from "@utilities/debounce";
 import {
   Alert,
   Button,
@@ -62,17 +63,28 @@ export const AssetsPage = () => {
     queryFn: mockApi.getAssets
   });
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [rowsState, setRowsState] = useState<AssetRow[]>(() =>
     (data ?? []).map((asset, index) => ({ ...asset, rowId: `${asset.id}-${index}` }))
   );
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editingRowId, setEditingRowId] = useState<string | null>(null);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 8 });
+  const debouncedSetSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        setDebouncedSearch(value);
+      }, 300),
+    []
+  );
+  useEffect(() => {
+    setPagination((prev) => ({ ...prev, current: 1 }));
+  }, [debouncedSearch]);
   const [form] = Form.useForm();
   const selectedType = Form.useWatch("type", form);
   const selectedStatus = Form.useWatch("status", form);
 
-  const normalized = search.trim().toLowerCase();
+  const normalized = debouncedSearch.trim().toLowerCase();
 
   const rows = useMemo(() => {
     if (!normalized) {
@@ -305,8 +317,10 @@ export const AssetsPage = () => {
               allowClear
               value={search}
               onChange={(event) => {
-                setSearch(event.target.value);
-                setPagination((prev) => ({ ...prev, current: 1 }));
+                const value = event.target.value;
+
+                setSearch(value);
+                debouncedSetSearch(value);
               }}
               prefix={<SearchOutlined />}
               placeholder="Поиск по ID, активу, сотруднику, локации"
