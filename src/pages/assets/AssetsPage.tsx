@@ -18,7 +18,7 @@ import {
   Typography,
   message
 } from "antd";
-import dayjs from "dayjs";
+import dayjs, { type Dayjs } from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 
 import { Asset } from "@entities/asset/model/types";
@@ -30,7 +30,7 @@ import styles from "./AssetsPage.module.scss";
 
 import type { ColumnsType } from "antd/es/table";
 
-const typeRu = {
+const typeRu: Record<Asset["type"], string> = {
   Laptop: "Ноутбук",
   Server: "Сервер",
   Network: "Сеть",
@@ -38,21 +38,37 @@ const typeRu = {
   Inventory: "Инвентарь"
 };
 
-const statusRu = {
+const statusRu: Record<Asset["status"], string> = {
   in_use: "Выдано",
   in_stock: "На складе",
   maintenance: "Обслуживание",
   retired: "Списано"
 };
 
-const statusColor = {
+const statusColor: Record<Asset["status"], string> = {
   in_use: "green",
   in_stock: "blue",
   maintenance: "orange",
   retired: "default"
 };
 
+const isAssetType = (value: string): value is Asset["type"] => value in typeRu;
+
+const isAssetStatus = (value: string): value is Asset["status"] => value in statusRu;
+
 type AssetRow = Asset & { rowId: string };
+
+type AssetFormValues = {
+  id: string;
+  title: string;
+  type: Asset["type"];
+  owner: string;
+  assignedTo: string;
+  storageLocation: string;
+  issuedAt: Dayjs | null;
+  returnDue: Dayjs | null;
+  status: Asset["status"];
+};
 
 const formatDate = (value: string | null) => (value ? dayjs(value).format("DD.MM.YYYY") : "—");
 
@@ -68,9 +84,9 @@ export const AssetsPage = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [editingRowId, setEditingRowId] = useState<string | null>(null);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 8 });
-  const [form] = Form.useForm();
-  const selectedType = Form.useWatch("type", form);
-  const selectedStatus = Form.useWatch("status", form);
+  const [form] = Form.useForm<AssetFormValues>();
+  const selectedType = Form.useWatch<AssetFormValues["type"]>("type", form);
+  const selectedStatus = Form.useWatch<AssetFormValues["status"]>("status", form);
 
   const normalized = search.trim().toLowerCase();
 
@@ -376,14 +392,16 @@ export const AssetsPage = () => {
               <Dropdown
                 menu={{
                   items: Object.entries(typeRu).map(([value, label]) => ({ key: value, label })),
-                  onClick: ({ key }) => form.setFieldValue("type", key as Asset["type"])
+                  onClick: ({ key }) => {
+                    if (isAssetType(key)) {
+                      form.setFieldValue("type", key);
+                    }
+                  }
                 }}
                 trigger={["click"]}
               >
                 <Button className={styles.formDropdownBtn}>
-                  <span>
-                    {selectedType ? typeRu[selectedType as Asset["type"]] : "Выберите тип"}
-                  </span>
+                  <span>{selectedType ? typeRu[selectedType] : "Выберите тип"}</span>
                   <DownOutlined />
                 </Button>
               </Dropdown>
@@ -419,16 +437,16 @@ export const AssetsPage = () => {
               <Dropdown
                 menu={{
                   items: Object.entries(statusRu).map(([value, label]) => ({ key: value, label })),
-                  onClick: ({ key }) => form.setFieldValue("status", key as Asset["status"])
+                  onClick: ({ key }) => {
+                    if (isAssetStatus(key)) {
+                      form.setFieldValue("status", key);
+                    }
+                  }
                 }}
                 trigger={["click"]}
               >
                 <Button className={styles.formDropdownBtn}>
-                  <span>
-                    {selectedStatus
-                      ? statusRu[selectedStatus as Asset["status"]]
-                      : "Выберите статус"}
-                  </span>
+                  <span>{selectedStatus ? statusRu[selectedStatus] : "Выберите статус"}</span>
                   <DownOutlined />
                 </Button>
               </Dropdown>
