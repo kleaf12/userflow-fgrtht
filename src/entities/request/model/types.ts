@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export type RequestType =
   | "access"
   | "infrastructure"
   | "hardware"
   | "security_exception"
   | "procurement";
+
 export type RequestPriority = "low" | "medium" | "high" | "critical";
+
 export type RequestStatus =
   | "submitted"
   | "in_review"
@@ -16,14 +16,14 @@ export type RequestStatus =
   | "rejected";
 
 export interface ServiceRequest {
-  id: any;
-  title: any;
-  type: any;
-  priority: any;
-  status: any;
-  requester: any;
-  assignee: any;
-  relatedAssetId: any | null;
-  createdAt: any;
-  dueAt: any;
+  id: string;
+  title: string;
+  type: RequestType;
+  priority: RequestPriority;
+  status: RequestStatus;
+  requester: string;
+  assignee: string;
+  relatedAssetId: string | null;
+  createdAt: string;
+  dueAt: string;
 }
