@@ -66,6 +66,17 @@ const priorityLabel: Record<ServiceRequest["priority"], string> = {
   critical: "Критичный"
 };
 
+const priorityOrder: ServiceRequest["priority"][] = ["low", "medium", "high", "critical"];
+
+const statusOrder: ServiceRequest["status"][] = [
+  "submitted",
+  "in_review",
+  "approved",
+  "in_progress",
+  "done",
+  "rejected"
+];
+
 export const RequestsPage = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["requests"],
@@ -140,9 +151,7 @@ export const RequestsPage = () => {
       width: 130,
       filters: Object.entries(priorityLabel).map(([value, label]) => ({ text: label, value })),
       onFilter: (value, row) => row.priority === value,
-      sorter: (a, b) =>
-        ["low", "medium", "high", "critical"].indexOf(a.priority) -
-        ["low", "medium", "high", "critical"].indexOf(b.priority),
+      sorter: (a, b) => priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority),
       render: (value: ServiceRequest["priority"]) => (
         <Tag color={priorityColor[value]}>{priorityLabel[value]}</Tag>
       )
@@ -153,11 +162,7 @@ export const RequestsPage = () => {
       width: 160,
       filters: Object.entries(statusLabel).map(([value, label]) => ({ text: label, value })),
       onFilter: (value, row) => row.status === value,
-      sorter: (a, b) =>
-        ["submitted", "in_review", "approved", "in_progress", "done", "rejected"].indexOf(
-          a.status
-        ) -
-        ["submitted", "in_review", "approved", "in_progress", "done", "rejected"].indexOf(b.status),
+      sorter: (a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status),
       render: (value: ServiceRequest["status"]) => (
         <Tag color={statusColor[value]}>{statusLabel[value]}</Tag>
       )
