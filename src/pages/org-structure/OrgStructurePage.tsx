@@ -1,5 +1,6 @@
 import { SearchOutlined, TeamOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
+import { debounce } from "@utilities/debounce";
 import {
   Alert,
   Avatar,
@@ -50,11 +51,19 @@ const initials = (fullName: string) =>
 export const OrgStructurePage = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState<string>("all");
   const [teamFilter, setTeamFilter] = useState<string>("all");
   const [statusFilter, setStatusFilter] = useState<"all" | UserProfile["status"]>("all");
   const [leadersOnly, setLeadersOnly] = useState(false);
 
+  const debouncedSetSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        setDebouncedSearch(value);
+      }, 300),
+    [setDebouncedSearch]
+  );
   const {
     data: users,
     isLoading,
@@ -83,7 +92,7 @@ export const OrgStructurePage = () => {
 
   const filtered = useMemo(() => {
     const source = users ?? [];
-    const query = search.trim().toLowerCase();
+    const query = debouncedSearch.trim().toLowerCase();
 
     return source.filter((user) => {
       if (departmentFilter !== "all" && user.department !== departmentFilter) {
@@ -105,7 +114,7 @@ export const OrgStructurePage = () => {
         .toLowerCase()
         .includes(query);
     });
-  }, [users, search, departmentFilter, teamFilter, statusFilter, leadersOnly]);
+  }, [users, debouncedSearch, departmentFilter, teamFilter, statusFilter, leadersOnly]);
 
   const stats = useMemo(() => {
     const source = users ?? [];
@@ -217,7 +226,12 @@ export const OrgStructurePage = () => {
             <Input
               allowClear
               value={search}
-              onChange={(event) => setSearch(event.target.value)}
+              onChange={(event) => {
+                const value = event.target.value;
+
+                setSearch(value);
+                debouncedSetSearch(value);
+              }}
               prefix={<SearchOutlined />}
               placeholder="Поиск по сотруднику, роли, команде"
               className={styles.search}
